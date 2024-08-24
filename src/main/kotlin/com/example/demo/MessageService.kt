@@ -2,6 +2,7 @@ package com.example.demo
 
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class MessageService(val db: JdbcTemplate) {
@@ -10,6 +11,7 @@ class MessageService(val db: JdbcTemplate) {
     }
 
     fun save(message: Message) {
-        db.update("insert into message values (?, ?)", message.id, message.text);
+        val id = message.id ?: UUID.randomUUID().toString()
+        db.update("insert into message values (?, ?)", id, message.text);
     }
 }
